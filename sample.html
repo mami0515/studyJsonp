@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<div><input type="text" id="familyName"></div>
+<div><input type="text" id="givenName"></div>
+<a href="#" id="btn">jsonp</a>
+
+<script>
+var Util = {
+  addListener: function(oElm, sType, func, cap) {
+    if (!oElm) { return false; }
+    if (oElm.addEventListener) {
+        oElm.addEventListener(sType, func, cap);
+    } else if (oElm.attachEvent) {
+        oElm.attachEvent("on"+sType, func);
+    } else {
+        return false;
+    }
+    return false;
+  },
+  preventDefault: function (e) {
+      var eo = e || window.event;
+      if (eo.preventDefault) {
+          eo.preventDefault();
+      } else { 
+          eo.returnValue = false;
+      }
+  }
+};
+
+Util.addListener(document.getElementById("btn"), "click", function(e){
+  Util.preventDefault(e);
+  var script;
+  script = document.createElement("script");
+  script.src = "http://design.settle.cre.ssk.ynwm.yahoo.co.jp/users/maoda/jsonp/stub.php?callback=success";
+  document.body.appendChild(script);
+});
+
+function success(data){
+  document.getElementById("familyName").value = data.familyName;
+  document.getElementById("givenName").value = data.givenName;
+}
+</script>
+</body>
+</html>
